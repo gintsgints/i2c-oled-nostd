@@ -18,6 +18,7 @@ use embedded_graphics::{
     text::{Alignment, Text},
 };
 use esp_backtrace as _;
+use esp_println::println;
 use esp_hal::{
     clock::ClockControl,
     gpio::IO,
@@ -31,6 +32,8 @@ use nb::block;
 
 #[entry]
 fn main() -> ! {
+    esp_println::logger::init_logger_from_env();
+    
     let peripherals = Peripherals::take();
     let system = peripherals.SYSTEM.split();
 
@@ -69,6 +72,8 @@ fn main() -> ! {
         .font(&FONT_9X18_BOLD)
         .text_color(BinaryColor::On)
         .build();
+
+    println!("Hello world");
 
     loop {
         // Fill display bufffer with a centered text with two lines (and two text
